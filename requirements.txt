@@ -5,3 +5,5 @@ Pillow
 httpx
 requests
 idna
+tensorflow
+tensorflow-hub
