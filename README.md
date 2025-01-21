@@ -11,7 +11,10 @@
 <br><br>
 
 ### 실행 방법
-- 라이브러리 설치 후 각 파일 실행
+- 가상환경 활성화 후 라이브러리 설치 및 각 파일 실행
+```bash
+conda activate <환경 이름>
+```
 ```bash
 pip install -r requirements.txt
 ```
@@ -27,5 +30,6 @@ python image_composition.py
 ├── 📄 image_control.py         # 이미지 변환
 ├── 📄 image_composition.py     # 이미지 합성
 ├── 📄 requirements.txt         # 필요한 라이브러리 목록
+├── 📄 .gitignore
 └── 📄 README.md                
 ```
