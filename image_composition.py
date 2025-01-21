@@ -1,88 +1,61 @@
 import gradio as gr
-import numpy as np
 import cv2
+import numpy as np
 from PIL import Image
-import tensorflow as tf
-import tensorflow_hub as hub
 
-# TensorFlow Hub의 깊이 예측 모델 로드
-MODEL_URL = "https://tfhub.dev/intel/midas/v2_1_small/1"
-try:
-    depth_model = hub.load(MODEL_URL)
-    print("모델 로드 성공")
-except Exception as e:
-    depth_model = None
-    print(f"모델 로드 실패: {e}")
-    exit()
 
-def generate_depth_map(image):
-    # 이미지를 모델 입력 크기에 맞게 조정 (256x256)
-    input_tensor = tf.image.resize(image, (256, 256))
-    input_tensor = tf.cast(input_tensor, tf.float32) / 255.0  # [0, 1]로 정규화
-    input_tensor = tf.expand_dims(input_tensor, axis=0)  # 배치 차원 추가
+def blend_images(image1, image2, image3, image4, alpha1, alpha2, alpha3, alpha4):
+    # 이미지를 NumPy 배열로 변환 및 크기 통일
+    image1 = np.array(image1.resize((500, 500))) if image1 else np.zeros((500, 500, 3), dtype=np.uint8)
+    image2 = np.array(image2.resize((500, 500))) if image2 else np.zeros((500, 500, 3), dtype=np.uint8)
+    image3 = np.array(image3.resize((500, 500))) if image3 else np.zeros((500, 500, 3), dtype=np.uint8)
+    image4 = np.array(image4.resize((500, 500))) if image4 else np.zeros((500, 500, 3), dtype=np.uint8)
 
-    # 모델 호출
-    output = depth_model(input_tensor)
+    # 합성 초기값 설정 (빈 이미지로 시작)
+    blended = np.zeros_like(image1, dtype=np.float32)
 
-    # 깊이 맵 추출
-    depth_map = output["default"].numpy()[0]
+    # 알파 값에 따라 각각의 이미지를 합성
+    blended += image1 * (alpha1 / 100)
+    blended += image2 * (alpha2 / 100)
+    blended += image3 * (alpha3 / 100)
+    blended += image4 * (alpha4 / 100)
 
-    # 깊이 맵 정규화
-    depth_map = cv2.normalize(depth_map, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
-    return depth_map
+    # 값의 범위를 0~255로 제한하고 uint8 형식으로 변환
+    blended = np.clip(blended, 0, 255).astype(np.uint8)
 
-def apply_3d_effect(image, depth_map, x_offset, y_offset):
-    # 이미지와 깊이 맵의 크기 동기화
-    h, w = image.shape[:2]
-    depth_map = cv2.resize(depth_map, (w, h))
+    return Image.fromarray(blended)
 
-    # 왜곡 효과 적용
-    x, y = np.meshgrid(np.arange(w), np.arange(h))
-    x_new = np.clip(x + depth_map * (x_offset / 100), 0, w - 1).astype(np.float32)
-    y_new = np.clip(y + depth_map * (y_offset / 100), 0, h - 1).astype(np.float32)
-    remapped = cv2.remap(image, x_new, y_new, interpolation=cv2.INTER_LINEAR)
-
-    return remapped
-
-def process_image(image, x_offset, y_offset):
-    try:
-        # 이미지를 NumPy 배열로 변환
-        image_np = np.array(image)
-
-        # 깊이 맵 생성
-        depth_map = generate_depth_map(image_np)
-
-        # 3D 효과 적용
-        output_image = apply_3d_effect(image_np, depth_map, x_offset, y_offset)
-
-        return Image.fromarray(output_image), Image.fromarray(depth_map)
-    except Exception as e:
-        print(f"오류 발생: {e}")
-        return None, None
 
 def setup_ui():
     with gr.Blocks() as demo:
-        gr.Markdown("# 3D 이미지 효과\n이미지를 업로드하고 가상 카메라 뷰포인트를 조정하세요.")
+        gr.Markdown("# 이미지 합성 웹\n4개의 이미지를 업로드하고 각각의 투명도를 조절하여 합성하세요.")
 
         with gr.Row():
-            input_image = gr.Image(label="업로드 이미지", type="pil")
-            output_image = gr.Image(label="3D 효과 적용 이미지")
-            depth_map_output = gr.Image(label="생성된 깊이 맵")
+            # 이미지 업로드
+            image1 = gr.Image(label="이미지 1 업로드", type="pil")
+            image2 = gr.Image(label="이미지 2 업로드", type="pil")
+            image3 = gr.Image(label="이미지 3 업로드", type="pil")
+            image4 = gr.Image(label="이미지 4 업로드", type="pil")
 
-        x_offset = gr.Slider(label="카메라 X 이동", minimum=-50, maximum=50, step=1, value=0)
-        y_offset = gr.Slider(label="카메라 Y 이동", minimum=-50, maximum=50, step=1, value=0)
+        # 트랙바로 각 이미지의 투명도 조정
+        alpha1 = gr.Slider(label="이미지 1", minimum=0, maximum=100, step=1, value=45)
+        alpha2 = gr.Slider(label="이미지 2", minimum=0, maximum=100, step=1, value=45)
+        alpha3 = gr.Slider(label="이미지 3", minimum=0, maximum=100, step=1, value=45)
+        alpha4 = gr.Slider(label="이미지 4", minimum=0, maximum=100, step=1, value=45)  # 수정된 부분
 
-        inputs = [input_image, x_offset, y_offset]
-        outputs = [output_image, depth_map_output]
-
-        def update(*args):
-            return process_image(*args)
+        # 합성된 이미지 출력
+        output_image = gr.Image(label="합성된 이미지")
 
         # 실시간 업데이트 연결
+        def update_output(image1, image2, image3, image4, alpha1, alpha2, alpha3, alpha4):
+            return blend_images(image1, image2, image3, image4, alpha1, alpha2, alpha3, alpha4)
+
+        inputs = [image1, image2, image3, image4, alpha1, alpha2, alpha3, alpha4]
         for control in inputs:
-            control.change(fn=update, inputs=inputs, outputs=outputs, queue=False)
+            control.change(fn=update_output, inputs=inputs, outputs=output_image)
 
     return demo
+
 
 if __name__ == "__main__":
     demo = setup_ui()
