@@ -19,23 +19,28 @@
 ### 실행 방법
 - 가상환경 활성화 후 라이브러리 설치 및 각 파일 실행
 ```bash
+# 가상환경 활성화
 conda activate <환경 이름>
 ```
 ```bash
+# 라이브러리 설치
 pip install -r requirements.txt
 ```
 ```bash
+# 파일 실행
 python image_control.py
 python image_composition.py
+python image_style_transfer.py
 ```
 <br>  
 
 ### 폴더 구조
 ```plaintext
 📁 gradio/
-├── 📁 images/                  # 각 파일별 웹 이미지
+├── 📁 images/                  # 각 파일별 웹 캡처 이미지들
 ├── 📄 image_control.py         # 이미지 변환
 ├── 📄 image_composition.py     # 이미지 합성
+├── 📄 image_style_transfer.py  # 이미지 스타일 적용 변환
 ├── 📄 requirements.txt         # 필요한 라이브러리 목록
 ├── 📄 .gitignore
 └── 📄 README.md                
