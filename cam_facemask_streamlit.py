@@ -1,5 +1,4 @@
 # streamlit run cam_facemask_streamlit.py
-# 그라디오로 구현하고 싶었는데 실패
 
 
 import streamlit as st
