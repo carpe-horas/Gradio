@@ -24,6 +24,12 @@
 - OpenCV로 얼굴 크기와 위치에 따라 마스크 이미지를 조정하고 합성 처리  
 <br><br>
 
+### 4. `image_backchange.py`
+- 사용자가 이미지를 업로드하면 배경을 제거하고 제공된 배경 또는 사용자가 업로드한 배경 이미지와 합성할 수 있도록 구현
+- rembg 라이브러리를 사용하여 입력 이미지에서 배경 제거
+![그라디오_배경합성](images/web/image_backchange.png)  
+<br><br>
+
 ### 실행 방법
 - 가상환경 활성화 후 라이브러리 설치 및 각 파일 실행
 ```bash
@@ -39,6 +45,8 @@ pip install -r requirements.txt
 python image_control.py
 python image_composition.py
 python image_style_transfer.py
+streamlit run cam_facemask_streamlit.py
+python image_backchange.py
 ```
 <br>  
 
@@ -52,6 +60,7 @@ python image_style_transfer.py
 ├── 📄 image_composition.py         # 이미지 합성
 ├── 📄 image_control.py             # 이미지 변환
 ├── 📄 image_style_transfer.py      # 이미지 스타일 적용 변환
+├── 📄 image_backchange.py          # 이미지 배경 제거 후 배경 이미지 합성
 ├── 📄 requirements.txt             # 필요한 라이브러리
 ├── 📄 .gitignore              
 └── 📄 README.md               
