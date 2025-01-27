@@ -24,7 +24,7 @@
 - OpenCV로 얼굴 크기와 위치에 따라 마스크 이미지를 조정하고 합성 처리  
 <br><br>
 
-### 4. `image_backchange.py`
+### 5. `image_backchange.py`
 - 사용자가 이미지를 업로드하면 배경을 제거하고 제공된 배경 또는 사용자가 업로드한 배경 이미지와 합성할 수 있도록 구현
 - rembg 라이브러리를 사용하여 입력 이미지에서 배경 제거
 ![그라디오_배경합성](images/web/image_backchange.png)  
