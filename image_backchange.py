@@ -82,7 +82,6 @@ def fun_backgrounds(image):
     return results
 
 # Gradio 인터페이스
-# Gradio 인터페이스
 with gr.Blocks() as demo:
     gr.Markdown("## 이미지 배경 제거 및 원하는 배경으로 합성하기")
     
