@@ -70,9 +70,9 @@ streamlit run cam_facechange_streamlit_cv.py
 ### 폴더 구조
 ```plaintext
 📁 GRADIO-STREAMLIT/
-├── 📁 images/                          # 이미지 관련 파일 저장 폴더
+├── 📁 images/                          
 │   ├── 📁 mask/                        # cam_facemask_streamlit.py 실행에 필요한 이미지
-│   └── 📁 web/                         # 캡처된 웹 이미지를 저장하는 폴더
+│   └── 📁 web/                         # 캡처된 웹 이미지
 ├── 📄 cam_facemask_streamlit.py        # 웹캠 가면 착용
 ├── 📄 cam_facechange_streamlit.py      # 웹캠 얼굴 교체1
 ├── 📄 cam_facechange_streamlit_cv.py   # 웹캠 얼굴 교체2
