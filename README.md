@@ -30,6 +30,21 @@
 ![그라디오_배경합성](images/web/image_backchange.png)  
 <br><br>
 
+### 6. `cam_facechange_streamlit.py`
+- 웹캠에서 얼굴을 감지하고 두 명 이상일 경우 랜덤으로 얼굴 교체
+- Mediapipe FaceMesh를 활용하여 얼굴 윤곽을 감지하고 얼굴 교체를 위한 마스크 생성
+- OpenCV의 GaussianBlur를 사용하여 얼굴 합성 시 경계를 부드럽게 처리
+- OpenCV의 seamlessClone을 활용하여 얼굴을 자연스럽게 합성
+- OpenCV의 addWeighted를 활용하여 얼굴 교체 시 부드러운 전환 효과 적용
+<br><br>
+
+### 6-1. `cam_facechange_streamlit_cv.py`
+- 웹캠을 통해 실시간으로 얼굴을 감지하고, 두 명 이상일 경우 얼굴을 랜덤으로 교체
+- OpenCV의 Haar Cascade(haarcascade_frontalface_default.xml)를 활용한 얼굴 감지 및 교체
+- OpenCV의 seamlessClone을 활용하여 얼굴을 자연스럽게 합성
+<br><br>
+
+
 ### 실행 방법
 - 가상환경 활성화 후 라이브러리 설치 및 각 파일 실행
 ```bash
@@ -47,21 +62,25 @@ python image_composition.py
 python image_style_transfer.py
 streamlit run cam_facemask_streamlit.py
 python image_backchange.py
+streamlit run cam_facechange_streamlit.py
+streamlit run cam_facechange_streamlit_cv.py
 ```
 <br>  
 
 ### 폴더 구조
 ```plaintext
 📁 GRADIO-STREAMLIT/
-├── 📁 images/                      # 이미지 관련 파일 저장 폴더
-│   ├── 📁 mask/                    # cam_facemask_streamlit.py 실행에 필요한 이미지
-│   └── 📁 web/                     # 캡처된 웹 이미지를 저장하는 폴더
-├── 📄 cam_facemask_streamlit.py    # Streamlit으로 구현한 웹캠 마스크 적용
-├── 📄 image_composition.py         # 이미지 합성
-├── 📄 image_control.py             # 이미지 변환
-├── 📄 image_style_transfer.py      # 이미지 스타일 적용 변환
-├── 📄 image_backchange.py          # 이미지 배경 제거 후 배경 이미지 합성
-├── 📄 requirements.txt             # 필요한 라이브러리
+├── 📁 images/                          # 이미지 관련 파일 저장 폴더
+│   ├── 📁 mask/                        # cam_facemask_streamlit.py 실행에 필요한 이미지
+│   └── 📁 web/                         # 캡처된 웹 이미지를 저장하는 폴더
+├── 📄 cam_facemask_streamlit.py        # 웹캠 가면 착용
+├── 📄 cam_facechange_streamlit.py      # 웹캠 얼굴 교체1
+├── 📄 cam_facechange_streamlit_cv.py   # 웹캠 얼굴 교체2
+├── 📄 image_composition.py             # 이미지 합성
+├── 📄 image_control.py                 # 이미지 변환
+├── 📄 image_style_transfer.py          # 이미지 스타일 적용 변환
+├── 📄 image_backchange.py              # 이미지 배경 제거 후 배경 이미지 합성
+├── 📄 requirements.txt             
 ├── 📄 .gitignore              
 └── 📄 README.md               
             
