@@ -49,6 +49,7 @@
 - OpenCV의 Haar Cascade(haarcascade_frontalface_default.xml)를 활용한 얼굴 감지 및 감정 분석
 - 사용 모델: FER2013 데이터셋을 기반으로 학습된 Mini-Xception 구조의 CNN 모델로, 얼굴 감정을 7가지 클래스(Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise)로 분류. 원래 FER2013 데이터는 48x48이지만, 감정 분석을 위한 입력 전처리 과정에서 크기를 64x64로 변경하여 사용.
 - [원본 모델명 : fer2013_mini_XCEPTION.110-0.65.hdf5](https://github.com/oarriaga/face_classification/tree/master/trained_models/emotion_models)
+- Happy, Surprise, Fearsms 잘 인식하지만 Angry, Disgust, Sad는 잘 반영하지 못함
 <br><br>
 
 
