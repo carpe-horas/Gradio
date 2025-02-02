@@ -44,7 +44,7 @@
 - OpenCV의 seamlessClone을 활용하여 얼굴을 자연스럽게 합성
 <br><br>
 
-### 7. `cam_face_emotion_recognition_streamlit.py`
+### 7. `cam_face_emotion_stremlit.py`
 - 웹캠을 통해 얼굴을 감지하여 실시간으로 감정을 분석하고, 감정에 따라 화면 배경 색상 변경 및 텍스트 제공
 - OpenCV의 Haar Cascade(haarcascade_frontalface_default.xml)를 활용한 얼굴 감지 및 감정 분석
 - 사용 모델: FER2013 데이터셋을 기반으로 학습된 Mini-Xception 구조의 CNN 모델로, 얼굴 감정을 7가지 클래스(Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise)로 분류. 원래 FER2013 데이터는 48x48이지만, 감정 분석을 위한 입력 전처리 과정에서 크기를 64x64로 변경하여 사용.
@@ -71,16 +71,18 @@ streamlit run cam_facemask_streamlit.py
 python image_backchange.py
 streamlit run cam_facechange_streamlit.py
 streamlit run cam_facechange_streamlit_cv.py
-streamlit run cam_face_emotion_recognition_streamlit.py
+streamlit run cam_face_emotion_stremlit.py
 ```
 <br>  
 
 ### 폴더 구조
 ```plaintext
-📁 GRADIO-STREAMLIT/
-├── 📁 images/                          
-│   ├── 📁 mask/                        # cam_facemask_streamlit.py 실행에 필요한 이미지
-│   └── 📁 web/                         # 캡처된 웹 이미지
+📁 GRADIO-STREAMLIT
+├── 📁 images                          
+│   ├── 📁 mask                         # cam_facemask_streamlit.py 실행에 필요한 이미지
+│   └── 📁 web                          # 캡처된 웹 이미지
+├── 📁 models
+├── 📄 cam_face_emotion_stremlit.py     # 웹캠 얼굴 감정 분류
 ├── 📄 cam_facemask_streamlit.py        # 웹캠 가면 착용
 ├── 📄 cam_facechange_streamlit.py      # 웹캠 얼굴 교체1
 ├── 📄 cam_facechange_streamlit_cv.py   # 웹캠 얼굴 교체2
