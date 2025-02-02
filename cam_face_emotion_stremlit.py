@@ -1,4 +1,4 @@
-# streamlit run cam_face_emotion_recognition_stremlit.py
+# streamlit run cam_face_emotion_stremlit.py
 
 
 import streamlit as st
