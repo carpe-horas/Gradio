@@ -52,6 +52,12 @@
 - Happy, Surprise, Fearsms 잘 인식하지만 Angry, Disgust, Sad는 잘 반영하지 못함
 <br><br>
 
+### 8. `face_aging_streamlit.py`
+- 웹캠 또는 업로드한 이미지를 통해 얼굴을 분석하여 나이, 성별, 감정, 인종 예측.
+- DeepFace 기본 모델인 VGG-Face 모델을 사용하여 AI 기반 얼굴 분석 수행.
+- OpenCV를 활용한 웹캠 실시간 스트리밍 및 이미지 캡처.
+![얼굴분석](images/web/image_face_aging.png)  
+<br><br>
 
 ### 실행 방법
 - 가상환경 활성화 후 라이브러리 설치 및 각 파일 실행
@@ -73,6 +79,7 @@ python image_backchange.py
 streamlit run cam_facechange_streamlit.py
 streamlit run cam_facechange_streamlit_cv.py
 streamlit run cam_face_emotion_stremlit.py
+streamlit run face_aging_streamlit.py
 ```
 <br>  
 
@@ -87,6 +94,7 @@ streamlit run cam_face_emotion_stremlit.py
 ├── 📄 cam_facemask_streamlit.py        # 웹캠 가면 착용
 ├── 📄 cam_facechange_streamlit.py      # 웹캠 얼굴 교체1
 ├── 📄 cam_facechange_streamlit_cv.py   # 웹캠 얼굴 교체2
+├── 📄 face_aging_streamlit.py          # 얼굴 분석
 ├── 📄 image_composition.py             # 이미지 합성
 ├── 📄 image_control.py                 # 이미지 변환
 ├── 📄 image_style_transfer.py          # 이미지 스타일 적용 변환
